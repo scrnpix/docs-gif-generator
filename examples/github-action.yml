@@ -1,0 +1,32 @@
+name: Regenerate Docs GIFs
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "docs/**"
+
+jobs:
+  generate-gifs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Generate GIFs
+        env:
+          SCRNPIX_API_KEY: ${{ secrets.SCRNPIX_API_KEY }}
+        run: |
+          npx scrnpix-gif https://your-docs-site.com/guide/getting-started -o docs/assets/gifs/
+          npx scrnpix-gif https://your-docs-site.com/guide/configuration -o docs/assets/gifs/
+
+      - name: Commit updated GIFs
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/assets/gifs/
+          git diff --staged --quiet || git commit -m "docs: regenerate GIFs"
+          git push
