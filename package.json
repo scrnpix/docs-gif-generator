@@ -1,0 +1,34 @@
+{
+  "name": "scrnpix-gif",
+  "version": "0.1.0",
+  "description": "CLI tool that turns a URL into a scrolling GIF for documentation workflows",
+  "type": "module",
+  "bin": {
+    "scrnpix-gif": "./dist/cli.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "build": "tsup",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "commander": "^13.1.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.0",
+    "tsup": "^8.4.0",
+    "eslint": "^9.18.0",
+    "@eslint/js": "^9.18.0",
+    "typescript-eslint": "^8.21.0",
+    "vitest": "^3.0.0",
+    "@types/node": "^22.12.0"
+  },
+  "license": "MIT"
+}
