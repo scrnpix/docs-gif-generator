@@ -32,12 +32,14 @@ export async function fetchGif(
 
   if (!response.ok) {
     let body: Record<string, unknown> = {};
+    let plainText: string | undefined;
+    const rawText = await response.text();
     try {
-      body = (await response.json()) as Record<string, unknown>;
+      body = JSON.parse(rawText) as Record<string, unknown>;
     } catch {
-      // Response may not be JSON
+      plainText = rawText.trim() || undefined;
     }
-    throw new Error(formatApiError(response.status, body));
+    throw new Error(formatApiError(response.status, body, plainText));
   }
 
   const arrayBuffer = await response.arrayBuffer();

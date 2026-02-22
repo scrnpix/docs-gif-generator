@@ -9,9 +9,14 @@ interface ApiErrorBody {
   retry_after?: number;
 }
 
-export function formatApiError(status: number, body: ApiErrorBody): string {
+export function formatApiError(
+  status: number,
+  body: ApiErrorBody,
+  plainText?: string,
+): string {
   const code = body.error ?? "";
 
+  // Match on structured error codes first
   switch (code) {
     case "missing_url_param":
       return "URL parameter is required. Usage: scrnpix-gif <url>";
@@ -33,11 +38,27 @@ export function formatApiError(status: number, body: ApiErrorBody): string {
 
     case "animation_error":
       return "Animation failed. Try opening the URL in a browser to verify it loads correctly.";
-
-    default:
-      if (body.message) {
-        return `API error (${status}): ${body.message}`;
-      }
-      return `API error (${status}): ${code || "Unknown error"}`;
   }
+
+  // No structured code — fall back to HTTP status for common plain-text responses
+  if (!code) {
+    switch (status) {
+      case 400:
+        return `Bad request${plainText ? `: ${plainText}` : ""}. Check the URL and parameters.`;
+      case 401:
+        return `Unauthorized. Check your API key or get one at ${SIGNUP_LINK}`;
+      case 403:
+        return `Forbidden. Your API key does not have access to this resource. Check your plan at ${BILLING_LINK}`;
+      case 429:
+        return `Rate limit exceeded. Upgrade your plan at ${BILLING_LINK}`;
+    }
+  }
+
+  if (body.message) {
+    return `API error (${status}): ${body.message}`;
+  }
+  if (plainText) {
+    return `API error (${status}): ${plainText}`;
+  }
+  return `API error (${status}): ${code || "Unknown error"}`;
 }

@@ -6,6 +6,9 @@ on:
     paths:
       - "docs/**"
 
+permissions:
+  contents: write
+
 jobs:
   generate-gifs:
     runs-on: ubuntu-latest

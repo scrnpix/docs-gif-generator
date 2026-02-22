@@ -41,6 +41,17 @@ describe("loadConfig", () => {
     const config = loadConfig(child);
     expect(config.width).toBe(500);
   });
+
+  it("searches multiple levels up", () => {
+    const root = mkdtempSync(join(tmpdir(), "scrnpix-test-"));
+    const level1 = join(root, "a");
+    const level2 = join(level1, "b");
+    const level3 = join(level2, "c");
+    mkdirSync(level3, { recursive: true });
+    writeFileSync(join(root, ".scrnpixrc.json"), JSON.stringify({ width: 999 }));
+    const config = loadConfig(level3);
+    expect(config.width).toBe(999);
+  });
 });
 
 describe("mergeOptions", () => {

@@ -7,7 +7,6 @@ const DEFAULT_API_URL = "https://api.scrnpix.com";
 
 export function loadConfig(startDir: string = process.cwd()): ScrnpixConfig {
   let dir = resolve(startDir);
-  const root = dirname(dir);
 
   while (true) {
     for (const filename of CONFIG_FILENAMES) {
@@ -18,7 +17,7 @@ export function loadConfig(startDir: string = process.cwd()): ScrnpixConfig {
       }
     }
     const parent = dirname(dir);
-    if (parent === dir || dir === root) break;
+    if (parent === dir) break;
     dir = parent;
   }
 

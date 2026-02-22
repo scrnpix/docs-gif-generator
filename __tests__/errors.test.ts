@@ -72,4 +72,34 @@ describe("formatApiError", () => {
     const msg = formatApiError(500, {});
     expect(msg).toBe("API error (500): Unknown error");
   });
+
+  // Plain-text status fallbacks (no structured error code)
+  it("maps plain-text 401 to actionable auth message", () => {
+    const msg = formatApiError(401, {}, "Unauthorized");
+    expect(msg).toContain("Unauthorized");
+    expect(msg).toContain(`scrnpix.com/signup${REF}`);
+  });
+
+  it("maps plain-text 400 with body text", () => {
+    const msg = formatApiError(400, {}, "missing url parameter");
+    expect(msg).toContain("Bad request");
+    expect(msg).toContain("missing url parameter");
+  });
+
+  it("maps plain-text 403 to forbidden message", () => {
+    const msg = formatApiError(403, {});
+    expect(msg).toContain("Forbidden");
+    expect(msg).toContain(`scrnpix.com/billing${REF}`);
+  });
+
+  it("maps plain-text 429 to rate limit message", () => {
+    const msg = formatApiError(429, {});
+    expect(msg).toContain("Rate limit exceeded");
+    expect(msg).toContain(`scrnpix.com/billing${REF}`);
+  });
+
+  it("uses plainText in generic fallback when no code or message", () => {
+    const msg = formatApiError(502, {}, "Bad Gateway");
+    expect(msg).toBe("API error (502): Bad Gateway");
+  });
 });

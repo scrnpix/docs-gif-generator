@@ -20,7 +20,15 @@ function mockFetchError(status: number, body: Record<string, unknown>) {
   return vi.fn().mockResolvedValue({
     ok: false,
     status,
-    json: () => Promise.resolve(body),
+    text: () => Promise.resolve(JSON.stringify(body)),
+  });
+}
+
+function mockFetchPlainTextError(status: number, text: string) {
+  return vi.fn().mockResolvedValue({
+    ok: false,
+    status,
+    text: () => Promise.resolve(text),
   });
 }
 
@@ -89,12 +97,16 @@ describe("fetchGif", () => {
     ).rejects.toThrow("Invalid API key");
   });
 
-  it("handles non-JSON error response", async () => {
-    global.fetch = vi.fn().mockResolvedValue({
-      ok: false,
-      status: 500,
-      json: () => Promise.reject(new Error("not json")),
-    });
+  it("handles plain-text error response with actionable message", async () => {
+    global.fetch = mockFetchPlainTextError(401, "Unauthorized");
+
+    await expect(
+      fetchGif({ url: "https://example.com" }, "bad-key", "https://api.scrnpix.com"),
+    ).rejects.toThrow("Unauthorized");
+  });
+
+  it("handles non-JSON non-plain error response", async () => {
+    global.fetch = mockFetchPlainTextError(500, "");
 
     await expect(
       fetchGif({ url: "https://example.com" }, "key", "https://api.scrnpix.com"),
