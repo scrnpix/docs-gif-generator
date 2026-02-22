@@ -79,7 +79,7 @@ Automatically regenerate documentation GIFs on every push. See [`examples/github
 | API key is required | Set `SCRNPIX_API_KEY` env var or add `apiKey` to config file |
 | Invalid API key | Check your key at [scrnpix.com](https://www.scrnpix.com/?ref=docs-gif-generator) |
 | URL is not publicly accessible | Ensure the page is reachable from the internet |
-| Insufficient credits | Add credits at [scrnpix.com/billing](https://www.scrnpix.com/pricing?ref=docs-gif-generator) |
+| Insufficient credits | Add credits at [scrnpix.com/pricing](https://www.scrnpix.com/pricing?ref=docs-gif-generator) |
 | Rate limit exceeded | Wait for the retry period or upgrade your plan |
 | Animation failed | Verify the URL loads correctly in a browser |
 
