@@ -4,7 +4,7 @@ CLI tool that turns a URL into a scrolling GIF for documentation workflows. Powe
 
 ## Quickstart (60 seconds)
 
-1. [Get your API key](https://scrnpix.com/signup?ref=docs-gif-generator)
+1. [Get your API key](https://www.scrnpix.com/?ref=docs-gif-generator)
 2. Export it:
    ```bash
    export SCRNPIX_API_KEY=your_key_here
@@ -77,9 +77,9 @@ Automatically regenerate documentation GIFs on every push. See [`examples/github
 | Error | Solution |
 |---|---|
 | API key is required | Set `SCRNPIX_API_KEY` env var or add `apiKey` to config file |
-| Invalid API key | Check your key at [scrnpix.com](https://scrnpix.com/signup?ref=docs-gif-generator) |
+| Invalid API key | Check your key at [scrnpix.com](https://www.scrnpix.com/?ref=docs-gif-generator) |
 | URL is not publicly accessible | Ensure the page is reachable from the internet |
-| Insufficient credits | Add credits at [scrnpix.com/billing](https://scrnpix.com/billing?ref=docs-gif-generator) |
+| Insufficient credits | Add credits at [scrnpix.com/billing](https://www.scrnpix.com/pricing?ref=docs-gif-generator) |
 | Rate limit exceeded | Wait for the retry period or upgrade your plan |
 | Animation failed | Verify the URL loads correctly in a browser |
 
@@ -89,4 +89,4 @@ MIT
 
 ---
 
-Powered by [Scrnpix](https://scrnpix.com?ref=docs-gif-generator) | [Get API Key](https://scrnpix.com/signup?ref=docs-gif-generator)
+Powered by [Scrnpix](https://scrnpix.com?ref=docs-gif-generator) | [Get API Key](https://www.scrnpix.com/?ref=docs-gif-generator)
